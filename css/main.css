@@ -1,0 +1,58 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+body{margin-top:40px;}
+
+.list{
+	list-style-type: none;
+	margin:0;
+	padding:0;
+}
+.list .glyphicon{
+	display: none;
+}
+.list li{
+	padding:5px;
+}
+.list li:hover{
+	background: #f6f6f6;
+}
+.list li:hover .glyphicon{
+	display:inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+
+*[draggable=true] {
+  -moz-user-select:none;
+  -khtml-user-drag: element;
+  cursor: move;
+}
+
+  droptarget.lvl-over {
+    border: 1px dotted black !important;
+  }
+ 
+  .lvl-target {
+    background-color: #ddd; 
+    opacity: .5;
+  }
+ 
+
+
+
+
+
+
+
+
+
+
+
