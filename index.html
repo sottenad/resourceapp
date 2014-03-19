@@ -33,26 +33,29 @@
 
 	<!--Show People-->
     <div class="container">
-    	<div class="col-xs-6" ng-controller="peopleCtrl">
+    	<div class="col-xs-3" ng-controller="peopleCtrl">
+    		<span class="glyphicon glyphicon-cog editbtn" ng-click="toggleEdit()"></span>
     		<h3>People <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addPersonModal">Add</a></h3>
-    			<div ng-model="person" ng-repeat="(key, person) in people | orderBy:orderProp" x-lvl-draggable='true' data-key="{{key}}">
-	    			<span class="glyphicon glyphicon-ban-circle" ng-click="removePerson(key)"></span>
-    				{{person.firstName}} {{person.lastName}} - <small><em>{{person.type}}</em></small>
-    			</div>
+			<div ng-model="person" ng-repeat="(key, person) in people" x-lvl-draggable='true' data-key="{{key}}">
+    			<span class="glyphicon glyphicon-ban-circle" ng-click="removePerson(key)" ng-if="editPeople"></span>
+				{{person.firstName}} {{person.lastName}}<small><em class="hidden-md hidden-sm hidden-xs"> - {{person.type}}</em></small>
+			</div>
     		
     	</div>
-    	<div class="col-xs-6" ng-controller="projectCtrl">
+    	<div class="col-xs-8 col-xs-offset-1" ng-controller="projectCtrl">
     		<h3>Projects <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addProjectModal">Add</a></h3>
     		<div class="row">
-    			<div ng-repeat="(key,project) in projects" class="col-md-4 droptarget" data-key="{{key}}" x-lvl-drop-target='true' x-on-drop="addPersonToProject(dragEl, dropEl)">
-    				<h6>{{project.name}}</h6>
+    			<div ng-repeat="(key,project) in projects" class="col-md-4 droptarget project" data-key="{{key}}" x-lvl-drop-target='true' x-on-drop="addPersonToProject(dragEl, dropEl)">
+    				<h3>{{project.name}}</h3>
+    				<span class="glyphicon glyphicon-ban-circle deleteProject" ng-click="removeProject(key)"></span>
     				<small>{{formatPrice(project.budget)}}</small>
-    			    <span class="glyphicon glyphicon-ban-circle" ng-click="removeProject(key)"></span>
-	    			<span class="glyphicon glyphicon glyphicon-plus-sign" ng-click="add(key)"></span>
-	    			<div ng-repeat="(personKey,person) in project.people">
-	    				{{people[personKey].firstName}} {{people[personKey].lastName}}
-	    				<span class="glyphicon glyphicon-ban-circle" ng-click="removePersonFromProject(personKey,key)"></span>
-	    			</div>
+	    			
+	    			<ul ng-repeat="(personKey,person) in project.people">
+	    				<li>
+	    					{{people[personKey].firstName}} {{people[personKey].lastName}}
+	    					<span class="glyphicon glyphicon-ban-circle" ng-click="removePersonFromProject(personKey,key)"></span>
+	    				</li>
+	    			</ul>
     			</div>
     		</div>
     	</div>
@@ -72,7 +75,7 @@
     	    <form>
     	    	<div class="form-group">
 	    	    	<label>First Name</label>
-		    		<input type="text" ng-model="person.firstName" placeholder="First Name" class="form-control"/>
+		    		<input type="text" ng-model="person.firstName" placeholder="First Name" class="form-control" autofocus/>
     	    	</div>
 	    		<div class="form-group">
 		    		<label>Last Name</label>
@@ -106,7 +109,7 @@
     	    <form>
     	    	<div class="form-group">
 	    	    	<label>Project Name</label>
-		    		<input type="text" ng-model="project.name" placeholder="Client Name" class="form-control"/>
+		    		<input type="text" ng-model="project.name" placeholder="Client Name" class="form-control" autofocus/>
     	    	</div>
 	    		<div class="form-group">
 		    		<label>Project Budget <small>($USD)</small></label>

@@ -9,25 +9,38 @@
 
 body{margin-top:40px;}
 
-.list{
-	list-style-type: none;
+.project{
+	padding:10px;
+	margin:10px;
+	background:#f2f2f2;
+	border:1px solid #eee;
+}
+.project ul{
 	margin:0;
 	padding:0;
 }
-.list .glyphicon{
-	display: none;
+.project li{
+	margin:0;
+	padding:0;
+	list-style-type: none;
 }
-.list li{
-	padding:5px;
+.project li .glyphicon{
+	display:none;
 }
-.list li:hover{
-	background: #f6f6f6;
-}
-.list li:hover .glyphicon{
+.project li:hover .glyphicon{
 	display:inline-block;
-	float: right;
-	cursor: pointer;
 }
+
+
+.editbtn, .deleteProject{
+	position: absolute;
+	top:30px;
+	right:20px;
+}
+.glyphicon-ban-circle{
+	color:#d9534f;
+}
+
 
 
 *[draggable=true] {
