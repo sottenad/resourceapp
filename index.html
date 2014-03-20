@@ -62,7 +62,7 @@
 				<span class="person">{{person.firstName}} {{person.lastName}}</span>
     			</td>
     			<td>
-				<span>{{totalAllocation(key)}}</span>
+				<span>{{totalAllocation(key)}}%</span>
     			</td>
 			</tr>
     		</table>
@@ -73,7 +73,7 @@
 
     		<div class="row">
     			<div ng-repeat="(key,project) in projects" class=" droptarget project" data-key="{{key}}" x-lvl-drop-target='true' x-on-drop="addPersonToProject(dragEl, dropEl)">
-	        		<span class="status {{project.status.toLowerCase()}}"></span>
+	        		<span ng-click="setProjectToEdit(key)" class="status {{project.status.toLowerCase()}}"></span>
 	    			<span ng-if="editProjects" class="glyphicon glyphicon-ban-circle deleteProject" ng-click="removeProject(key)"></span>
     				<div class="col-md-4">
     				<h3 ng-click="setProjectToEdit(key)">{{project.name}}</h3>
