@@ -1,0 +1,20 @@
+<!--Show People-->
+<div class="people" ng-controller="peopleCtrl">
+	<span class="glyphicon glyphicon-cog editbtn" ng-click="toggleEdit()"></span>
+	<h3>
+		People 
+		<a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addPersonModal">Add</a>
+	</h3>
+	<span>{{peopleCount()}}</span>
+	<table class="table">
+	<tr ng-model="person" ng-repeat="(key, person) in people" x-lvl-draggable='true' data-key="{{key}}"  ng-class="{danger: totalAllocation(key)>100, success: 80<totalAllocation(key) && totalAllocation(key) <=100}">
+		<td class="first">
+		<span class="glyphicon glyphicon-ban-circle" ng-click="removePerson(key)" ng-if="editPeople"></span>
+		<span class="person">{{person.firstName}} {{person.lastName}}</span>
+		</td>
+		<td class="totalAllocation">
+		<span>{{totalAllocation(key)}}%</span>
+		</td>
+	</tr>
+	</table>
+</div>

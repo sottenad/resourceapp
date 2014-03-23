@@ -1,0 +1,13 @@
+<div ng-controller="datepickerCtrl">
+	<div ng-click="showPicker=!showPicker" class="navbar-header">
+		<a class="navbar-brand">
+		<span class="glyphicon glyphicon-calendar"></span> 
+		<span>{{date.prettyStart}}</span> - 
+		<span>{{date.prettyEnd}}</span> 
+		<span class="glyphicon glyphicon-chevron-down"></span>
+		</a>
+	</div>
+	<div ng-show="showPicker" class="datePickerCont">
+		<datepicker class="datepicker" ng-change="setDateRange()" show-button-bar="false" ng-model="dt" datepicker-options="dateOptions" ></datepicker>
+	</div>
+</div>

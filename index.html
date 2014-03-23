@@ -39,157 +39,46 @@
 	    <div class="navbar-header">
 	      <a class="navbar-brand" href="#">Resourcing</a>
 	    </div>
-	
+	    <div class="navbar-left" id="bs-example-navbar-collapse-1">
+		    <ul class="nav navbar-nav">
+  			    <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
+			    <li ui-sref-active="active"><a ui-sref="calendar">Calendar</a></li>
+		    </ul>
+	    </div>
 
+	    <div class="navbar-right">
+	    	<div ng-controller="datepickerCtrl">
+				<div ng-click="showPicker=!showPicker" class="navbar-header">
+					<a class="navbar-brand">
+					<span class="glyphicon glyphicon-calendar"></span> 
+					<span>{{date.prettyStart}}</span> - 
+					<span>{{date.prettyEnd}}</span> 
+					<span class="glyphicon glyphicon-chevron-down"></span>
+					</a>
+				</div>
+				<div ng-show="showPicker" class="datePickerCont">
+					<datepicker class="datepicker" ng-change="setDateRange()" show-button-bar="false" ng-model="dt" datepicker-options="dateOptions" ></datepicker>
+				</div>
+			</div>
+	    </div>
 	      
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
 	<!-- End Nav-->
+	
 
-	<!--Show People-->
-    	<div class="col-xs-3 people" ng-controller="peopleCtrl">
-    		<span class="glyphicon glyphicon-cog editbtn" ng-click="toggleEdit()"></span>
-    		<h3>
-    			People 
-    			<a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addPersonModal">Add</a>
-    		</h3>
-    		<span>{{peopleCount()}}</span>
-    		<table class="table">
-			<tr ng-model="person" ng-repeat="(key, person) in people" x-lvl-draggable='true' data-key="{{key}}"  ng-class="{danger: totalAllocation(key)>100, success: 80<totalAllocation(key) && totalAllocation(key) <=100}">
-    			<td class="first">
-    			<span class="glyphicon glyphicon-ban-circle" ng-click="removePerson(key)" ng-if="editPeople"></span>
-				<span class="person">{{person.firstName}} {{person.lastName}}</span>
-    			</td>
-    			<td>
-				<span>{{totalAllocation(key)}}%</span>
-    			</td>
-			</tr>
-    		</table>
-    	</div>
-    	<div class="col-xs-9 projectContainer" ng-controller="projectCtrl">
-    		<h3>Projects <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addProjectModal">Add</a></h3>
-    		<span class="glyphicon glyphicon-cog editbtn" ng-click="editProjects=!editProjects"></span>
-
-    		<div class="row">
-    			<div ng-repeat="(key,project) in projects" class=" droptarget project" data-key="{{key}}" x-lvl-drop-target='true' x-on-drop="addPersonToProject(dragEl, dropEl)">
-	        		<span ng-click="setProjectToEdit(key)" class="status {{project.status.toLowerCase()}}"></span>
-	    			<span ng-if="editProjects" class="glyphicon glyphicon-ban-circle deleteProject" ng-click="removeProject(key)"></span>
-    				<div class="col-md-4">
-    				<h3 ng-click="setProjectToEdit(key)">{{project.name}}</h3>
-    				<small>{{formatPrice(project.budget)}}</small>
-    				</div>
-	    			<div class="col-md-7">
-		    			<div ng-repeat="(personKey,person) in project.people" data-key="{{personKey}}" class="allocation" >
-	    					{{people[personKey].firstName}} {{people[personKey].lastName}} (<span>{{project.people[personKey].allocation}}</span>%)
-	    					<span class="glyphicon glyphicon-ban-circle" ng-click="removePersonFromProject(personKey,key)"></span>
-	    					<input type="range" min="0" max="100" step="10" ng-change="setPersonsAllocation(personKey, key)" ng-model="project.people[personKey].allocation" />
-	    					
-		    			</div>
-	    			</div>
-    			</div>
-    		</div>
-    	</div>
-
-
-
-
-<!--=============================================-->    	
-    <div class="modal fade" id="addPersonModal" ng-controller="peopleCtrl">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title">Add Person</h4>
-	      </div>
-	      <div class="modal-body">
-    	    <form>
-    	    	<div class="form-group">
-	    	    	<label>First Name</label>
-		    		<input type="text" ng-model="person.firstName" placeholder="First Name" class="form-control" autofocus/>
-    	    	</div>
-	    		<div class="form-group">
-		    		<label>Last Name</label>
-		    		<input type="text" ng-model="person.lastName" placeholder="Last Name" class="form-control"/>
-	    		</div>
-	    		<div class="form-group">
-	    			<label>Role</label>
-		    		<select ng-model="person.type" class="form-control">
-		    			<option ng-repeat="type in peopleTypes | orderBy:type" value="{{type}}">{{type}}</option>
-		    		</select>
-	    		</div>
-    		</form>
-	      </div>
-	      <div class="modal-footer">
-		    <button class="btn btn-primary" data-dismiss="modal" ng-click="addPerson()">Add Person</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal --> 
-<!--=============================================-->
-	<!--Add Project-->
-    <div class="modal fade" id="addProjectModal" ng-controller="projectCtrl">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title">Add Project</h4>
-	      </div>
-	      <div class="modal-body">
-    	    <form>
-    	    	<div class="form-group">
-	    	    	<label>Project Name</label>
-		    		<input type="text" ng-model="project.name" placeholder="Client Name" class="form-control" autofocus/>
-    	    	</div>
-	    		<div class="form-group">
-		    		<label>Project Budget <small>($USD)</small></label>
-		    		<input type="number" ng-model="project.budget" placeholder="105000" class="form-control"/>
-	    		</div>
-    		</form>
-	      </div>
-	      <div class="modal-footer">
-		    <button class="btn btn-primary" data-dismiss="modal" ng-click="addProject()">Add Project</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal --> 
-<!--=============================================-->	
-	<!--Edit Project-->
-    <div class="modal fade" id="editProjectModal" ng-controller="projectCtrl">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title">Edit Project</h4>
-	      </div>
-	      <div class="modal-body">
-    	    <form>
-    	    	<div class="form-group">
-	    	    	<label>Project Name</label>
-		    		<input type="text" ng-model="projectToEdit.name" placeholder="Client Name" class="form-control" autofocus/>
-    	    	</div>
-	    		<div class="form-group">
-		    		<label>Project Budget <small>($USD)</small></label>
-		    		<input type="number" ng-model="projectToEdit.budget" placeholder="105000" class="form-control"/>
-	    		</div>
-	    		<div class="form-group">
-	    			<label>State</label>
-		    		<select ng-model="projectToEdit.status" class="form-control">
-		    			<option ng-repeat="val in projectStates | orderBy:type" value="{{val}}">{{val}}</option>
-		    		</select>
-	    		</div>
-    		</form>
-	      </div>
-	      <div class="modal-footer">
-		    <button class="btn btn-primary" data-dismiss="modal" ng-click="updateProject(projectToEdit.$id)">Save Project</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal --> 
-<!--=============================================-->
+	<div class="col-xs-12" ui-view="fullwidth">
+	</div>
+	
+	<div class="sidebar col-xs-3" ui-view="sidebar">
+	</div>
+	
+	<div class="content col-xs-9 " ui-view="content">
+		
+		<!--Content will be injected here-->
+		
+	</div>
         
     
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -197,13 +86,20 @@
     <!--Start App-->
     <script src="js/vendor/uuid.js"></script>   
     <script src="js/vendor/drag-drop.js"></script>
+    <script src="js/vendor/angular-ui-router.min.js"></script>
+    <script src="js/vendor/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="js/vendor/moment.min.js"></script>
     
-    <script src="js/app.js"></script>
-    <script src="js/people.js"></script>
+
+    <script src="js/app/app.js"></script>
     <script src="js/factories/people.js"></script>
     <script src="js/factories/project.js"></script>
-    <script src="js/projects.js"></script>
-    
+    <script src="js/factories/date.js"></script>
+    <script src="js/app/projects.js"></script>
+    <script src="js/app/people.js"></script> 
+    <script src="js/app/calendar.js"></script> 
+    <script src="js/app/datepicker.js"></script>    
+    <script src="js/app/router.js"></script>    
 
     <script>
         var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

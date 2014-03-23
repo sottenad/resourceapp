@@ -1,0 +1,9 @@
+<div class="calendar" ng-controller="calendarCtrl">
+	<h3>{{date.prettyStart}}</h3>
+	<table>
+		<tr ng-repeat="person in people">
+			<td>{{person.firstName}} {{person.lastName}}</td>
+			<td class="dates"></td>
+		</tr>
+	</table>
+</div>

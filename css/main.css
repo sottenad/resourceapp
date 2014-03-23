@@ -4,15 +4,30 @@
    Author's custom styles
    ========================================================================== */
 
+/*Polyfill from angular bootstrap for blank href*/
+.nav, .pagination, .carousel, .panel-title a, .nav a { cursor: pointer; }
 
+
+.datePickerCont{
+	position: absolute;
+	top:50px;
+	right:0;
+	background:#ddd;
+	padding:20px;
+	z-index:10;
+}
 
 
 .table td {
-	    -webkit-transition: background-color 600ms linear;
+	-webkit-transition: background-color 600ms linear;
     -moz-transition: background-color 600ms linear;
     -o-transition: background-color 600ms linear;
     -ms-transition: background-color 600ms linear;
     transition: background-color 600ms linear;
+}
+
+.people .totalAllocation{
+	text-align: right;
 }
 
 .project{

@@ -1,0 +1,23 @@
+<!--Show Projects-->
+<div class="projectContainer" ng-controller="projectCtrl">
+	<h3>Projects <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addProjectModal">Add</a></h3>
+	<span class="glyphicon glyphicon-cog editbtn" ng-click="editProjects=!editProjects"></span>
+
+	<div class="row">
+		<div ng-repeat="(key,project) in projects" class=" droptarget project" data-key="{{key}}" x-lvl-drop-target='true' x-on-drop="addPersonToProject(dragEl, dropEl)">
+    		<span ng-click="setProjectToEdit(key)" class="status {{project.status.toLowerCase()}}"></span>
+			<span ng-if="editProjects" class="glyphicon glyphicon-ban-circle deleteProject" ng-click="removeProject(key)"></span>
+			<div class="col-md-4">
+			<h3 ng-click="setProjectToEdit(key)">{{project.name}}</h3>
+			<small>{{formatPrice(project.budget)}}</small>
+			</div>
+			<div class="col-md-7">
+    			<div ng-repeat="(personKey,person) in project.people" data-key="{{personKey}}" class="allocation" >
+					{{people[personKey].firstName}} {{people[personKey].lastName}} (<span>{{project.people[personKey].allocation}}</span>%)
+					<span class="glyphicon glyphicon-ban-circle" ng-click="removePersonFromProject(personKey,key)"></span>
+					<input type="range" min="0" max="100" step="10" ng-change="setPersonsAllocation(personKey, key)" ng-model="project.people[personKey].allocation" />
+    			</div>
+			</div>
+		</div>
+	</div>
+</div>
