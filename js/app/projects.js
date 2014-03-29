@@ -15,6 +15,9 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		var np = {
 			'name': $scope.project.name,
 			'budget': $scope.project.budget,
+			'status': $scope.project.status,
+			'description': $scope.project.description,
+			'description2': $scope.project.description2,
 			'people': {}
 		}
 		projectFactory.addProject(np);
@@ -24,7 +27,8 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		var np = {
 			'name': $scope.projectToEdit.name,
 			'budget': $scope.projectToEdit.budget,
-			'status': $scope.projectToEdit.status
+			'status': $scope.projectToEdit.status,
+			'description': $scope.projectToEdit.description,
 		}
 		projectFactory.updateProject(key, np);
 		$scope.project = null;
@@ -72,6 +76,10 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		}else{
 			return "Not Valid";
 		}
+	}
+	
+	$scope.openModal = function(id){
+		$(id).modal('show')
 	}
 	
 
