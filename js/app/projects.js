@@ -1,4 +1,4 @@
-resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory, peopleFactory){
+resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory, peopleFactory, dateFactory){
 	$scope.projects = projectFactory.getAllProjects();
 	
 	$scope.projectStates = [
@@ -17,7 +17,6 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 			'budget': $scope.project.budget,
 			'status': $scope.project.status,
 			'description': $scope.project.description,
-			'description2': $scope.project.description2,
 			'people': {}
 		}
 		projectFactory.addProject(np);
@@ -50,7 +49,12 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 	$scope.addPersonToProject = function(dragEl, dropEl){
 		var personId = $(dragEl).attr('data-key');
 		var projectId = $(dropEl).attr('data-key');
-		projectFactory.addPersonToProject(personId, projectId);
+		var datespan = dateFactory.getCurrentDateSpan();
+		var allocationData = {
+			'datespan': datespan, 
+			'allocationPercent':100
+		};
+		projectFactory.addPersonToProject(personId, projectId, allocationData);
 	}
 	$scope.removePersonFromProject = function(personId, projectId){
 		 projectFactory.removePersonFromProject(personId, projectId);
@@ -58,15 +62,20 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 	}
 
 	$scope.setPersonsAllocation = function(personId, projectId){
-		var input = parseInt(this.project.people[personId].allocation);
+		var input = parseInt(this.project.people[personId].allocation.allocationPercent);
 		var allocation = 100;
 		if(input> 100 || isNaN(input)){
 			allocation = 100;
 		}else{
 			allocation = input
 		}
-		peopleFactory.setAllocation(personId, projectId, allocation);
-		projectFactory.setPersonsAllocation(personId, projectId, allocation);
+		var datespan = dateFactory.getCurrentDateSpan();
+		var allocationData = {
+			'datespan': datespan, 
+			'allocationPercent':allocation
+		};
+		peopleFactory.setAllocation(personId, projectId, allocationData);
+		projectFactory.setPersonsAllocation(personId, projectId, allocationData);
 	}
 	
 	$scope.formatPrice = function(price){
