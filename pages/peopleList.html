@@ -3,7 +3,7 @@
 	<span class="glyphicon glyphicon-cog editbtn" ng-click="toggleEdit()"></span>
 	<h3>
 		People 
-		<a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addPersonModal">Add</a>
+		<a class="btn btn-default btn-xs" ng-click="showModal()" data-target="#addPersonModal">Add</a>
 	</h3>
 	<span>{{peopleCount()}}</span>
 	<table class="table">

@@ -8,7 +8,11 @@ resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory){
 	var allPeopleInProjects = $('.project li');
 	var allPeopleInPeople = $('.people div');
 	
-
+	$scope.showModal = function(){
+		$('#myModal').modal('show').on('show.bs.modal', function (e) {
+		  $('#addPersonModal input').eq(0).focus();
+		})
+	};
 	
 	$scope.addPerson = function(){
 		var np = {
@@ -45,6 +49,7 @@ resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory){
 	}
 	
 })
+
 
 resourcing.filter('orderObjectBy', function(){
   return function(input, attribute) {

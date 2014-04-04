@@ -12,6 +12,5 @@ var resourcing = angular.module("resourcing", ["firebase", "dragdrop", "ui.route
 	    }
 	  ]
 	);
-	
 
 

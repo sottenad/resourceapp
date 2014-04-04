@@ -1,4 +1,4 @@
-resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory, peopleFactory){
+resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory, peopleFactory, dateFactory){
 	$scope.projects = projectFactory.getAllProjects();
 	
 	$scope.projectStates = [
@@ -12,6 +12,7 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		projectFactory.removeProject(key);
 	}
 	$scope.addProject = function(){
+	
 		var np = {
 			'name': $scope.project.name,
 			'budget': $scope.project.budget,
@@ -51,6 +52,7 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		var personId = $(dragEl).attr('data-key');
 		var projectId = $(dropEl).attr('data-key');
 		projectFactory.addPersonToProject(personId, projectId);
+		peopleFactory.setAllocation(personId, projectId, 100);
 	}
 	$scope.removePersonFromProject = function(personId, projectId){
 		 projectFactory.removePersonFromProject(personId, projectId);
@@ -58,6 +60,7 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 	}
 
 	$scope.setPersonsAllocation = function(personId, projectId){
+		var datespan = dateFactory.getCurrentDateSpan();
 		var input = parseInt(this.project.people[personId].allocation);
 		var allocation = 100;
 		if(input> 100 || isNaN(input)){
@@ -65,6 +68,7 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		}else{
 			allocation = input
 		}
+		
 		peopleFactory.setAllocation(personId, projectId, allocation);
 		projectFactory.setPersonsAllocation(personId, projectId, allocation);
 	}
