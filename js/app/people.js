@@ -44,9 +44,9 @@ resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory, d
 		var startDate = dateFactory.getCurrentDateSpan();
 		var num = 0;
 		for(var thisKey in allAllocations){
-			if(allAllocations[thisKey].datespan.start == startDate.start){
-				num += allAllocations[thisKey].allocationPercent;
-			}
+			
+				num += allAllocations[thisKey].allocation;
+			
 		}
 		return num
 	}
