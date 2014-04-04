@@ -20,7 +20,7 @@ resourcing.factory('projectFactory', function($firebase, $rootScope, peopleFacto
 		updateProject: function(key, newProject){		
 			projects.$child(key).$update(newProject);
 		},
-		addPersonToProject: function(personKey, projectKey) {
+		addPersonToProject: function(personKey, projectKey, allocation) {
 			var thisproject = new Firebase("https://resourceapp.firebaseio.com/projects/"+projectKey);
 			var thisprojectRef = $firebase(thisproject);
 			var peopleChild = thisprojectRef.$child('people');
@@ -37,7 +37,11 @@ resourcing.factory('projectFactory', function($firebase, $rootScope, peopleFacto
 			var thisprojectRef = $firebase(thisproject);
 			var peopleChild = thisprojectRef.$child('people');
 			var thisPerson = peopleChild.$child(personKey);
+<<<<<<< HEAD:js/factories/project.js
 				thisPerson.$update({'allocation':allocation});
+=======
+				thisPerson.$update({'allocation': allocation})
+>>>>>>> 15eed2520781cc78f344adf2dae5cfee5e55e874:js/factories/project_factory.js
 		},
 		setProjectToEdit: function(key){
 			$rootScope.$broadcast('UPDATE_EDIT_PROJECT', projects.$child(key));

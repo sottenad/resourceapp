@@ -14,9 +14,9 @@
 			</div>
 			<div class="col-md-7">
     			<div ng-repeat="(personKey,person) in project.people" data-key="{{personKey}}" class="allocation" >
-					{{people[personKey].firstName}} {{people[personKey].lastName}} (<span>{{project.people[personKey].allocation}}</span>%)
+					{{people[personKey].firstName}} {{people[personKey].lastName}} (<span>{{project.people[personKey].allocation.allocationPercent}}</span>%)
 					<span class="glyphicon glyphicon-ban-circle" ng-click="removePersonFromProject(personKey,key)"></span>
-					<input type="range" min="0" max="100" step="10" ng-change="setPersonsAllocation(personKey, key)" ng-model="project.people[personKey].allocation" />
+					<input type="range" min="0" max="100" step="10" ng-change="setPersonsAllocation(personKey, key)" ng-model="project.people[personKey].allocation.allocationPercent" />
     			</div>
 			</div>
 		</div>

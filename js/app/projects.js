@@ -18,7 +18,6 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 			'budget': $scope.project.budget,
 			'status': $scope.project.status,
 			'description': $scope.project.description,
-			'description2': $scope.project.description2,
 			'people': {}
 		}
 		projectFactory.addProject(np);
@@ -53,6 +52,7 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		var projectId = $(dropEl).attr('data-key');
 		projectFactory.addPersonToProject(personId, projectId);
 		peopleFactory.setAllocation(personId, projectId, 100);
+
 	}
 	$scope.removePersonFromProject = function(personId, projectId){
 		 projectFactory.removePersonFromProject(personId, projectId);
@@ -68,9 +68,9 @@ resourcing.controller("projectCtrl", function($scope, $firebase, projectFactory,
 		}else{
 			allocation = input
 		}
-		
 		peopleFactory.setAllocation(personId, projectId, allocation);
 		projectFactory.setPersonsAllocation(personId, projectId, allocation);
+
 	}
 	
 	$scope.formatPrice = function(price){

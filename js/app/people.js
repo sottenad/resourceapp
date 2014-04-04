@@ -1,4 +1,4 @@
-resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory){
+resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory, dateFactory){
 
 	$scope.people = peopleFactory.getAllPeople();
 	$scope.orderProp = "firstName";
@@ -41,9 +41,12 @@ resourcing.controller('peopleCtrl', function($scope, $firebase, peopleFactory){
 	
 	$scope.totalAllocation = function(key){
 		var allAllocations = $scope.people[key].allocations;
+		var startDate = dateFactory.getCurrentDateSpan();
 		var num = 0;
 		for(var thisKey in allAllocations){
-			num += allAllocations[thisKey];
+			if(allAllocations[thisKey].datespan.start == startDate.start){
+				num += allAllocations[thisKey].allocationPercent;
+			}
 		}
 		return num
 	}
